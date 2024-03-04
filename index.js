@@ -4,6 +4,7 @@ const session = require("express-session")
 const mongoDBsession = require("connect-mongodb-session")(session);
 const mongoose = require("mongoose")
 const authRoute = require("./Routes/authController")
+const blogRoute = require("./Routes/blogController")
 
 const db = require('./db')
 
@@ -25,7 +26,8 @@ app.use(session({
 }))
 
 
-app.use("/auth",authRoute)
+app.use("/auth",authRoute);
+app.use("/blog", blogRoute);
 
 app.listen("8000", ()=>{
     console.log("server started")

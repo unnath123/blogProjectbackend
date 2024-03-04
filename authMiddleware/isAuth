@@ -1,0 +1,13 @@
+const isAuth = (req, res, next) =>{
+    if(req.session.isAuth){
+        next()
+    }
+    else{
+        return res.send({
+            message:"session expired please login back",
+            status:401
+        })
+    }
+}
+
+module.exports = {isAuth}
