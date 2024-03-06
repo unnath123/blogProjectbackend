@@ -48,7 +48,4 @@ const getAllBlogs = ({SKIP }) =>{
 }
 
 
-
-
-
 module.exports = {createBlog, getAllBlogs}
