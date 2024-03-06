@@ -47,9 +47,33 @@ const getAllBlogs = ({SKIP}) =>{
     })
 }
 
-const getMyBlogs = ({SKIP, userId}) =>{
-    const SKIP = 9;
-
+const getMyBlogs = ({SKIP, userID}) =>{
+    const LIMIT = 5;
+    return new Promise(async(resolve, reject)=>{
+        try{
+            const myBlogs = await blogModel.aggregate([
+                {
+                    $match: { userId: userID },
+                  },
+                  {
+                    $sort: { creationDateTime: -1 },
+                  },
+                  {
+                    $facet: {
+                      data: [{ $skip: SKIP }, { $limit: LIMIT }]
+                    },
+                  },
+            ])
+            console.log(myBlogs)
+            resolve(myBlogs[0].data)
+        }
+        catch(err){
+            reject("something went wrong")
+        }
+    })
+   
 }
 
-module.exports = {createBlog, getAllBlogs}
+module.exports = {createBlog, getAllBlogs, getMyBlogs}
+
+

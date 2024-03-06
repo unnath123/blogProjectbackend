@@ -2,7 +2,7 @@ const express = require("express");
 const { isAuth } = require("../authMiddleware/isAuth");
 const blogRoute = express.Router();
 const User = require("../class/userClass");
-const { createBlog, getAllBlogs } = require("../Functions/blogFuncs");
+const { createBlog, getAllBlogs, getMyBlogs } = require("../Functions/blogFuncs");
 const blogModel = require("../Models/blogModel");
 
 
@@ -79,10 +79,44 @@ blogRoute.get("/all-blogs", async(req, res)=>{
 })
 
 blogRoute.get("/myblogs", async(req, res)=>{
+   
     const userID = req.session.user.userId;
+    console.log(userID)
+
+    // try{
+    //     const userdb = await blogModel.findOne({userId: userID})
+
+    //     return res.send({
+    //         status:200,
+    //         data:userdb
+    //     })
+   
+
     const SKIP = Number(req.query.skip) || 0
+    try{
+        const myblogs = await getMyBlogs({SKIP, userID})
+
+        if(myblogs.length === 0) {
+            return res.send({
+                status:400,
+                message:"No blogs to display"
+            })
+        }
+
+        return res.send({
+            status:200,
+            message:"blogs retrieved successfully",
+            data: myblogs
+        })
+    }
+    catch(err){
+        return res.send({
+            status:400,
+            message:"no blogs found",
+            error:err
+        })
+    }
     
-    const myblogs = await getMyBlogs({SKIP, userID})
 })
 
 module.exports = blogRoute
