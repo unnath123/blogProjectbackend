@@ -2,9 +2,8 @@ const express = require("express");
 const { isAuth } = require("../authMiddleware/isAuth");
 const blogRoute = express.Router();
 const User = require("../class/userClass");
-const { createBlog, getAllBlogs, getMyBlogs } = require("../Functions/blogFuncs");
+const { createBlog, getAllBlogs, getMyBlogs, getblogwidthID, deleteBlog } = require("../Functions/blogFuncs");
 const blogModel = require("../Models/blogModel");
-
 
 
 blogRoute.post("/create-blog", isAuth,  async(req,res)=>{
@@ -52,7 +51,7 @@ blogRoute.post("/create-blog", isAuth,  async(req,res)=>{
 })
 
 //getallblogs?skip=5 
-blogRoute.get("/all-blogs", async(req, res)=>{
+blogRoute.get("/all-blogs", isAuth, async(req, res)=>{
   
     const SKIP = Number(req.query.skip) || 0
     try{
@@ -78,19 +77,10 @@ blogRoute.get("/all-blogs", async(req, res)=>{
     }
 })
 
-blogRoute.get("/myblogs", async(req, res)=>{
+blogRoute.get("/myblogs", isAuth, async(req, res)=>{
    
     const userID = req.session.user.userId;
     console.log(userID)
-
-    // try{
-    //     const userdb = await blogModel.findOne({userId: userID})
-
-    //     return res.send({
-    //         status:200,
-    //         data:userdb
-    //     })
-   
 
     const SKIP = Number(req.query.skip) || 0
     try{
@@ -115,8 +105,47 @@ blogRoute.get("/myblogs", async(req, res)=>{
             message:"no blogs found",
             error:err
         })
+    } 
+})
+
+// To be done during frontend
+//blogRoute.post("/edit-blog")
+
+blogRoute.delete("/delete-blog", isAuth, async(req,res)=>{
+    const {blogID} = req.body;
+    const userID = req.session.user.userId;
+
+    if(!blogID || !userID){
+        return res.send({
+            status:400,
+            message:"user or blog ID empty"
+        })
     }
-    
+
+    try{
+        const blog = await getblogwidthID(blogID)
+        if(!blog.userId.equals(userID)){
+            return res.send({
+                status: 403,
+                message: "Not allowed to delete, authorization failed.",
+            })
+        }
+
+        const blogDeleted = await deleteBlog(blogID);
+
+        return res.send({
+            status:200,
+            message: "successfully deleted"
+        })
+
+    }
+    catch(err){
+        return res.send({
+            status:400,
+
+        })
+    }
+      
 })
 
 module.exports = blogRoute

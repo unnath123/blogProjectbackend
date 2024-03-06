@@ -64,16 +64,45 @@ const getMyBlogs = ({SKIP, userID}) =>{
                     },
                   },
             ])
-            console.log(myBlogs)
+            // console.log(myBlogs)
             resolve(myBlogs[0].data)
         }
         catch(err){
             reject("something went wrong")
         }
     })
-   
 }
 
-module.exports = {createBlog, getAllBlogs, getMyBlogs}
+const getblogwidthID = (blogID) =>{
+    return new Promise(async(resolve, reject)=>{
+        try{
+            const blog =  await blogModel.findOne({_id: blogID});
+            if(!blog) reject("blog not found")
+
+            resolve(blog)
+        }
+        catch(err){
+            reject("not blogs found")
+        }
+    })
+}
+
+const deleteBlog = (blogID) =>{
+    return new Promise( async(resolve, reject)=>{
+
+        try{
+      
+            const isDeleted = await blogModel.findOneAndDelete({_id:blogID})
+            if(!isDeleted)reject("blog couldnt be deleted")
+
+            resolve("blog successfully deleted")
+        }   
+        catch(err){
+            reject("error deleting the blog")
+        }
+    })
+}
+
+module.exports = {createBlog, getAllBlogs, getMyBlogs, getblogwidthID, deleteBlog}
 
 
