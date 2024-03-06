@@ -50,4 +50,8 @@ const getAllBlogs = ({SKIP }) =>{
     })
 }
 
+const newfunc = () =>{
+
+}
+
 module.exports = {createBlog, getAllBlogs}
