@@ -48,7 +48,7 @@ const getAllBlogs = ({SKIP}) =>{
 }
 
 const getMyBlogs = ({SKIP, userId}) =>{
-    
+    const SKIP = 9;
 
 }
 
