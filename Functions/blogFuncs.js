@@ -47,11 +47,4 @@ const getAllBlogs = ({SKIP }) =>{
     })
 }
 
-
-const getMyBlogs = (SKIP, userId) =>{
-    
-}
-
-
-
 module.exports = {createBlog, getAllBlogs}
