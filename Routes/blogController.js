@@ -80,6 +80,8 @@ blogRoute.get("/all-blogs", async(req, res)=>{
 
 blogRoute.get("/myblogs", async(req, res)=>{
     const userID = req.session.user.userId;
+    const SKIP = Number(req.query.skip) || 0
+    
     const myblogs = await getMyBlogs({SKIP, userID})
 })
 

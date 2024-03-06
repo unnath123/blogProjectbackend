@@ -26,7 +26,7 @@ const createBlog = ({title, blog, creationTime, userID}) => {
     })
 }
 
-const getAllBlogs = ({SKIP }) =>{
+const getAllBlogs = ({SKIP}) =>{
     const LIMIT = 5;
     return new Promise( async(resolve, reject)=>{
         try{
@@ -48,6 +48,11 @@ const getAllBlogs = ({SKIP }) =>{
             reject("No blogs")
         }
     })
+}
+
+const getMyBlogs = ({SKIP, userId}) =>{
+    
+
 }
 
 module.exports = {createBlog, getAllBlogs}
