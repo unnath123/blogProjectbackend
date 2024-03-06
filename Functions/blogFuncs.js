@@ -48,9 +48,6 @@ const getAllBlogs = ({SKIP }) =>{
 }
 
 
-const getMyBlogs = (SKIP, userId) =>{
-    
-}
 
 
 
