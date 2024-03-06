@@ -1,8 +1,5 @@
 const blogModel = require("../Models/blogModel")
 
-
-
-
 const createBlog = ({title, blog, creationTime, userID}) => {
     return new Promise((resolve, reject)=>{
     try{
