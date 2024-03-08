@@ -8,7 +8,7 @@ const validateEmail = (email) => {
 const validateRegistrationData = ({name, username, email, password}) =>{
     return new Promise((resolve, reject)=>{
         if(!name || !username || !email || !password){
-            reject("All the fileds are mandatory")
+          return  reject("All the fileds are mandatory")
         }
 
         if (typeof username !== "string") reject("username is not a string");

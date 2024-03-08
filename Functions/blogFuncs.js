@@ -10,7 +10,7 @@ const createBlog = ({title, blog, creationTime, userID}) => {
             userId: userID
         })
         const userdb = blogObj.save();
-        if(!userdb) reject("blog couldnt be created");
+        if(!userdb)return reject("blog couldnt be created");
         resolve(userdb)
     }
     catch(err){
@@ -37,7 +37,7 @@ const getAllBlogs = ({SKIP}) =>{
                     }
                 }
             ])
-            if(!allBlogs) reject("No blogs found");
+            if(!allBlogs)return reject("No blogs found");
 
             resolve(allBlogs[0].data)
         }
@@ -77,7 +77,7 @@ const getblogwidthID = (blogID) =>{
     return new Promise(async(resolve, reject)=>{
         try{
             const blog =  await blogModel.findOne({_id: blogID});
-            if(!blog) reject("blog not found")
+            if(!blog)return reject("no blog with this blogID found")
 
             resolve(blog)
         }
@@ -91,7 +91,6 @@ const deleteBlog = (blogID) =>{
     return new Promise( async(resolve, reject)=>{
 
         try{
-      
             const isDeleted = await blogModel.findOneAndDelete({_id:blogID})
             if(!isDeleted)reject("blog couldnt be deleted")
 

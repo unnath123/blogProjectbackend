@@ -5,8 +5,8 @@ const mongoDBsession = require("connect-mongodb-session")(session);
 const mongoose = require("mongoose")
 const authRoute = require("./Routes/authController")
 const blogRoute = require("./Routes/blogController")
-
-const db = require('./db')
+const followRoute = require("./Routes/followController");
+const db = require('./db');
 
 const app = express();
 const URI = "mongodb+srv://unnath:12345@cluster0.djsaywi.mongodb.net/blog_project"
@@ -28,6 +28,7 @@ app.use(session({
 
 app.use("/auth",authRoute);
 app.use("/blog", blogRoute);
+app.use("/follow", followRoute)
 
 app.listen("8000", ()=>{
     console.log("server started")

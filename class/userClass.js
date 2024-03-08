@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt")
 const userModel = require("../Models/userModel")
+const ObjectId = require("mongodb").ObjectId;
 
 
 const User = class{
@@ -70,7 +71,20 @@ const User = class{
         })
     }
 
+    static verifyUser({userId}){
+        return new Promise(async(resolve, reject)=>{
+            if(!ObjectId.isValid(userId)) reject("Invalid userId")
 
+            try{
+                const verifyId = await userModel.findOne({_id: userId})
+                if(!verifyId) reject("user not found")
+                resolve(verifyId)
+            }
+            catch(err){
+                reject(err)
+            }
+        })
+    }
 }
 
 module.exports = User;
