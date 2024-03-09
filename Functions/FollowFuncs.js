@@ -1,4 +1,5 @@
 const followModel = require("../Models/followModel")
+const { findOneAndDelete } = require("../Models/userModel")
 
 const followUser = ({followerUserId, followingUserId}) =>{
     return new Promise(async(resolve, reject)=>{
@@ -24,4 +25,40 @@ const followUser = ({followerUserId, followingUserId}) =>{
     
 }
 
-module.exports = {followUser}
+const followList = (userId, SKIP) =>{
+    return new Promise(async(resolve, reject)=>{
+        try{
+            const follow_List = await followModel.aggregate([
+                {
+                    $match:{followerUserId: userId}
+                },
+                {
+                    $facet:{
+                        data:[{$skip:SKIP},{$limit:5}]
+                    }
+                }
+            ])
+            if(!follow_List) return reject("not following anyone");
+
+            resolve(follow_List[0].data)
+
+        }
+        catch(err){
+            reject(err)
+        }
+    })
+}
+
+const unfollowUser = (followerUserId, followingUserId) =>{
+    return new Promise(async(resolve, reject)=>{
+        try{
+            const unflDb = await followModel.findOneAndDelete({followerUserId, followingUserId})
+            resolve(unflDb)
+        }
+        catch(err){ 
+            reject(err)
+        }
+    })
+}
+
+module.exports = {followUser, followList, unfollowUser}

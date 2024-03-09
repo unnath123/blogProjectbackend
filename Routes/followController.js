@@ -1,7 +1,7 @@
 const express = require("express");
-const { followUser } = require("../Functions/FollowFuncs");
+const { followUser, followList, unfollowUser } = require("../Functions/FollowFuncs");
 const User = require("../class/userClass");
-const { Error } = require("mongoose");
+const followModel = require("../Models/followModel");
 const followRoute = express.Router();
 
 
@@ -16,8 +16,6 @@ followRoute.post("/follow-user", async(req, res)=>{
             message:"request cannot be processed"
         })
     }
-
-
     try{
         await User.verifyUser({userId: followerUserId})
         await User.verifyUser({userId:followingUserId})
@@ -37,6 +35,63 @@ followRoute.post("/follow-user", async(req, res)=>{
         return res.send({
             status:400,
             message:err
+        })
+    }
+})
+
+followRoute.get("/follow-list", async(req, res)=>{
+    const userID = req.session.user.userId
+    const SKIP = Number(req.query.skip) || 0
+    try{
+        const followlist = await followList(userID,SKIP )
+        if(followlist.length == 0) {
+            return res.send({
+                status:200,
+                message:"no followers found"
+            })
+        }
+        return res.send({
+            status:200,
+            message:"followers list",
+            follow_list: followlist
+        })
+    }
+    catch(err){
+        return res.send({
+            status:400,
+            message:err
+        })
+    }
+})
+
+followRoute.delete("/unfollow", async(req, res)=>{
+    const followingUserId = req.body.followingUserId;
+    const followerUserId = req.session.user.userId ;
+
+    try{
+        await User.verifyUser({userId: followingUserId})
+        await User.verifyUser({userId: followerUserId})
+    }
+    catch(err){
+        return res.send({
+            status:400,
+            message:"user ID not valid",
+            error:err
+        })
+    }
+
+    try{
+        const unfollowDB = await unfollowUser(followerUserId, followingUserId)
+        return res.send({
+            status:200,
+            message:"Unfollowed successfully",
+            data:unfollowDB
+        })
+    }
+    catch(err){
+        return res.send({
+            status:500,
+            message:"couldnt unfollow"
         })
     }
 })

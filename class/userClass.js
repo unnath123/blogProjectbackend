@@ -73,11 +73,12 @@ const User = class{
 
     static verifyUser({userId}){
         return new Promise(async(resolve, reject)=>{
-            if(!ObjectId.isValid(userId)) reject("Invalid userId")
+            if(!ObjectId.isValid(userId)) return reject("Invalid userId");
 
             try{
                 const verifyId = await userModel.findOne({_id: userId})
-                if(!verifyId) reject("user not found")
+                console.log(verifyId)
+                if(!verifyId) return reject("user not found");
                 resolve(verifyId)
             }
             catch(err){
