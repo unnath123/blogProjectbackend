@@ -77,7 +77,7 @@ const User = class{
 
             try{
                 const verifyId = await userModel.findOne({_id: userId})
-                console.log(verifyId)
+                //console.log(verifyId)
                 if(!verifyId) return reject("user not found");
                 resolve(verifyId)
             }

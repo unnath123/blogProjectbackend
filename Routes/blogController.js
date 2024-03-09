@@ -1,12 +1,12 @@
 const express = require("express");
-const { isAuth } = require("../authMiddleware/isAuth");
 const blogRoute = express.Router();
 const User = require("../class/userClass");
 const { createBlog, getAllBlogs, getMyBlogs, getblogwidthID, deleteBlog } = require("../Functions/blogFuncs");
 const blogModel = require("../Models/blogModel");
+const { isAuth } = require("../Middlewares/isAuth");
 
 
-blogRoute.post("/create-blog", isAuth,  async(req,res)=>{
+blogRoute.post("/create-blog",  async(req,res)=>{
     const {title, blog} = req.body;
     const userID = req.session.user.userId;
     const creationTime = Date.now();
@@ -51,7 +51,7 @@ blogRoute.post("/create-blog", isAuth,  async(req,res)=>{
 })
 
 //getallblogs?skip=5 
-blogRoute.get("/all-blogs", isAuth, async(req, res)=>{
+blogRoute.get("/all-blogs",  async(req, res)=>{
   
     const SKIP = Number(req.query.skip) || 0
     try{
@@ -77,10 +77,10 @@ blogRoute.get("/all-blogs", isAuth, async(req, res)=>{
     }
 })
 
-blogRoute.get("/myblogs", isAuth, async(req, res)=>{
+blogRoute.get("/myblogs", async(req, res)=>{
    
     const userID = req.session.user.userId;
-    console.log(userID)
+    //console.log(userID)
 
     const SKIP = Number(req.query.skip) || 0
     try{
@@ -111,7 +111,7 @@ blogRoute.get("/myblogs", isAuth, async(req, res)=>{
 // To be done during frontend
 //blogRoute.post("/edit-blog")
 
-blogRoute.delete("/delete-blog", isAuth, async(req,res)=>{
+blogRoute.delete("/delete-blog", async(req,res)=>{
     const {blogID} = req.body;
     const userID = req.session.user.userId;
 

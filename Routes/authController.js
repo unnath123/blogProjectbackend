@@ -2,8 +2,8 @@ const express = require("express");
 const authRoute = express.Router();
 const {validateRegistrationData} = require("../Functions/AuthFuncs");
 const User = require("../class/userClass")
-const bcrypt = require("bcrypt")
-
+const bcrypt = require("bcrypt");
+const { isAuth } = require("../Middlewares/isAuth");
 
 
 authRoute.post("/register", async (req, res)=>{
@@ -78,6 +78,24 @@ authRoute.post("/login", async(req, res)=>{
             status:400
         })
     }
+})
+
+authRoute.post("/logout", isAuth, (req, res)=>{
+    req.session.destroy((err)=>{
+        if(err){
+            return res.send({
+                status:500,
+                message: "couldnt logout",
+                message:err
+            })
+        }
+        else{
+            return res.send({
+                status:200,
+                message: "logout successful"
+            })
+        }
+    })
 })
 
 module.exports = authRoute 

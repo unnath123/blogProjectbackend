@@ -2,11 +2,13 @@ const express = require("express");
 const { followUser, followList, unfollowUser } = require("../Functions/FollowFuncs");
 const User = require("../class/userClass");
 const followModel = require("../Models/followModel");
+const { isAuth } = require("../Middlewares/isAuth");
+const { ratelimit } = require("../Middlewares/rateLimiting");
 const followRoute = express.Router();
 
 
-followRoute.post("/follow-user", async(req, res)=>{
-    console.log(req.session)
+followRoute.post("/follow-user", ratelimit , async(req, res)=>{
+    //console.log(req.session)
     const followerUserId = req.session.user.userId;
     const {followingUserId} = req.body;
 
