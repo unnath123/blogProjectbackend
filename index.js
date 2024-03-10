@@ -8,6 +8,7 @@ const blogRoute = require("./Routes/blogController")
 const followRoute = require("./Routes/followController");
 const db = require('./db');
 const { isAuth } = require("./Middlewares/isAuth");
+const { cleanUpDeletedBlogs } = require("./cron");
 
 const app = express();
 const URI = "mongodb+srv://unnath:12345@cluster0.djsaywi.mongodb.net/blog_project"
@@ -33,4 +34,6 @@ app.use("/follow", isAuth, followRoute)
 
 app.listen("8000", ()=>{
     console.log("server started")
+    cleanUpDeletedBlogs()
+    // console.log("end")
 })

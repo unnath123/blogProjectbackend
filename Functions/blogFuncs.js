@@ -7,7 +7,8 @@ const createBlog = ({title, blog, creationTime, userID}) => {
             title,
             textBody: blog,
             creationDateTime: creationTime,
-            userId: userID
+            userId: userID,
+            
         })
         const userdb = blogObj.save();
         if(!userdb)return reject("blog couldnt be created");
@@ -23,11 +24,17 @@ const createBlog = ({title, blog, creationTime, userID}) => {
     })
 }
 
-const getAllBlogs = ({SKIP}) =>{
+const getAllBlogs = ({followingUserIds, SKIP}) =>{
     const LIMIT = 5;
     return new Promise( async(resolve, reject)=>{
         try{
             const allBlogs = await blogModel.aggregate([
+                {
+                    $match: {
+                        userId: {$in: followingUserIds},
+                        isDeleted:{$ne: true}
+                    }
+                },
                 {
                     $sort:{creationDateTime: -1}
                 },
@@ -53,7 +60,7 @@ const getMyBlogs = ({SKIP, userID}) =>{
         try{
             const myBlogs = await blogModel.aggregate([
                 {
-                    $match: { userId: userID },
+                    $match: { userId: userID, isDeleted: {$ne: true} },
                   },
                   {
                     $sort: { creationDateTime: -1 },
@@ -73,7 +80,7 @@ const getMyBlogs = ({SKIP, userID}) =>{
     })
 }
 
-const getblogwidthID = (blogID) =>{
+const getblogwithID = (blogID) =>{
     return new Promise(async(resolve, reject)=>{
         try{
             const blog =  await blogModel.findOne({_id: blogID});
@@ -91,8 +98,8 @@ const deleteBlog = (blogID) =>{
     return new Promise( async(resolve, reject)=>{
 
         try{
-            const isDeleted = await blogModel.findOneAndDelete({_id:blogID})
-            if(!isDeleted)reject("blog couldnt be deleted")
+            const isBlogDeleted = await blogModel.findOneAndUpdate({_id:blogID}, {isDeleted:true, deletionTime: Date.now() })
+            if(!isBlogDeleted)reject("blog couldnt be deleted")
 
             resolve("blog successfully deleted")
         }   
@@ -102,6 +109,7 @@ const deleteBlog = (blogID) =>{
     })
 }
 
-module.exports = {createBlog, getAllBlogs, getMyBlogs, getblogwidthID, deleteBlog}
+
+module.exports = {createBlog, getAllBlogs, getMyBlogs, getblogwithID, deleteBlog}
 
 

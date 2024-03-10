@@ -1,9 +1,10 @@
 const express = require("express");
 const blogRoute = express.Router();
 const User = require("../class/userClass");
-const { createBlog, getAllBlogs, getMyBlogs, getblogwidthID, deleteBlog } = require("../Functions/blogFuncs");
+const { createBlog, getAllBlogs, getMyBlogs, getblogwithID, deleteBlog } = require("../Functions/blogFuncs");
 const blogModel = require("../Models/blogModel");
 const { isAuth } = require("../Middlewares/isAuth");
+const { followList } = require("../Functions/FollowFuncs");
 
 
 blogRoute.post("/create-blog",  async(req,res)=>{
@@ -55,7 +56,16 @@ blogRoute.get("/all-blogs",  async(req, res)=>{
   
     const SKIP = Number(req.query.skip) || 0
     try{
-        const allBlogs = await getAllBlogs({SKIP});
+
+        const followingUserlist = await followList({userId: req.session.user.userId, SKIP});
+        const followingUserIds = followingUserlist.map((user)=>{
+            return user.followingUserId;
+        })
+
+        //console.log(followingUserIds)
+
+        const allBlogs = await getAllBlogs({followingUserIds, SKIP});
+
         if(allBlogs.length == 0){
             return res.send({
                 status:400,
@@ -123,7 +133,7 @@ blogRoute.delete("/delete-blog", async(req,res)=>{
     }
 
     try{
-        const blog = await getblogwidthID(blogID)
+        const blog = await getblogwithID(blogID)
         if(!blog.userId.equals(userID)){
             return res.send({
                 status: 403,
@@ -142,7 +152,7 @@ blogRoute.delete("/delete-blog", async(req,res)=>{
     catch(err){
         return res.send({
             status:400,
-
+            error: err
         })
     }
       

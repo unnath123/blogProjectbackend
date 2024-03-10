@@ -25,7 +25,7 @@ const followUser = ({followerUserId, followingUserId}) =>{
     
 }
 
-const followList = (userId, SKIP) =>{
+const followList = ({userId, SKIP}) =>{
     return new Promise(async(resolve, reject)=>{
         try{
             const follow_List = await followModel.aggregate([
