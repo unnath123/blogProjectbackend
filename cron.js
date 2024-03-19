@@ -23,14 +23,11 @@ const cleanUpDeletedBlogs = () =>{
             await blogModel.findOneAndDelete({
                 _id:{$in: deletedIds}
             })
-            console.log("id deleted")
+            console.log("id deleted");
         }
        catch(err){
         return err
        }
-
-
-
     })
 }
 

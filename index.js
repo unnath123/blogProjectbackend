@@ -9,6 +9,7 @@ const followRoute = require("./Routes/followController");
 const db = require('./db');
 const { isAuth } = require("./Middlewares/isAuth");
 const { cleanUpDeletedBlogs } = require("./cron");
+const cors = require('cors');
 
 const app = express();
 const URI = "mongodb+srv://unnath:12345@cluster0.djsaywi.mongodb.net/blog_project"
@@ -27,13 +28,19 @@ app.use(session({
     store:store,
 }))
 
-
+app.use(cors({
+    origin: '*'
+  }));
 app.use("/auth", authRoute);
 app.use("/blog", isAuth, blogRoute);
-app.use("/follow", isAuth, followRoute)
+app.use("/follow", isAuth, followRoute);
+
+app.get("/", (req, res)=>{
+    return res.send("home page")
+})
 
 app.listen("8000", ()=>{
     console.log("server started")
-    cleanUpDeletedBlogs()
+    //cleanUpDeletedBlogs()
     // console.log("end")
 })

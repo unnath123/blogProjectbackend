@@ -42,7 +42,7 @@ authRoute.post("/register", async (req, res)=>{
 
 authRoute.post("/login", async(req, res)=>{
     const {loginID, password} = req.body;
-    // console.log(req.body)
+    console.log("request body",req.body)
     if(!loginID || !password){
         return res.send({
             message:"login ID or password is empty",
