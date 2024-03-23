@@ -26,6 +26,9 @@ app.use(session({
     saveUninitialized:false,
     resave:false,
     store:store,
+    cookie: {
+        secure: process.env.NODE_ENV === "production",
+    },
 }))
 
 app.use(cors({
