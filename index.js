@@ -27,13 +27,20 @@ app.use(session({
     resave:false,
     store:store,
     cookie: {
-        secure: process.env.NODE_ENV === "production",
+      sameSite: false,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000,
+      httpOnly: true,
     },
 }))
 
-app.use(cors({
-    origin: '*'
-  }));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 app.use("/auth", authRoute);
 app.use("/blog", isAuth, blogRoute);
 app.use("/follow", isAuth, followRoute);
