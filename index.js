@@ -31,6 +31,7 @@ app.use(session({
 app.use(cors({
     origin: '*'
   }));
+  
 app.use("/auth", authRoute);
 app.use("/blog", isAuth, blogRoute);
 app.use("/follow", isAuth, followRoute);

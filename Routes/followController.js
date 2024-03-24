@@ -43,9 +43,10 @@ followRoute.post("/follow-user", ratelimit , async(req, res)=>{
 
 followRoute.get("/follow-list", async(req, res)=>{
     const userID = req.session.user.userId
+    console.log(userID)
     const SKIP = Number(req.query.skip) || 0
     try{
-        const followlist = await followList(userID,SKIP )
+        const followlist = await followList(userID,SKIP)
         if(followlist.length == 0) {
             return res.send({
                 status:200,
@@ -61,6 +62,7 @@ followRoute.get("/follow-list", async(req, res)=>{
     catch(err){
         return res.send({
             status:400,
+            error:"this is the error",
             message:err
         })
     }

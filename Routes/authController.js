@@ -42,7 +42,11 @@ authRoute.post("/register", async (req, res)=>{
 
 authRoute.post("/login", async(req, res)=>{
     const {loginID, password} = req.body;
-    console.log("request body",req.body)
+    // const loginID = "test1";
+    // const password = "123"
+    // //console.log("request body",req.body)
+    // console.log("1")
+
     if(!loginID || !password){
         return res.send({
             message:"login ID or password is empty",
@@ -52,9 +56,11 @@ authRoute.post("/login", async(req, res)=>{
 
     try{
         const userdb = await User.findUserwithLoginID({loginID})
+
         //console.log(userdb)
         const passwordMatched = await bcrypt.compare(password, userdb.password)
         // console.log(passwordMatched)
+
         if(!passwordMatched){
             return res.send({
                 message:"password do not match",
