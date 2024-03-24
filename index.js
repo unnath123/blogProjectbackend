@@ -23,8 +23,8 @@ const store = new mongoDBsession({
 app.use(express.json());
 app.use(session({
     secret:"Todo appplication nodejs",
-    saveUninitialized:true,
-    resave:false,
+    saveUninitialized: false,
+    resave: false,
     store:store,
     cookie: {
       domain: 'localhost',
