@@ -27,8 +27,8 @@ app.use(session({
     resave: false,
     store:store,
     cookie: {
-      domain: 'localhost',
-      path: '/',
+      // domain: 'localhost',
+      // path: '/',
       sameSite: false,
       secure: false,
       maxAge: 1000*60*60*24,
