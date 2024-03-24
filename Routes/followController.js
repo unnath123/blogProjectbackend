@@ -42,6 +42,7 @@ followRoute.post("/follow-user", ratelimit , async(req, res)=>{
 })
 
 followRoute.get("/follow-list", async(req, res)=>{
+    console.log("this is the session---->>>>>>>>>",req.session)
     const userID = req.session.user.userId
     console.log(userID)
     const SKIP = Number(req.query.skip) || 0

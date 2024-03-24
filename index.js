@@ -23,15 +23,24 @@ const store = new mongoDBsession({
 app.use(express.json());
 app.use(session({
     secret:"Todo appplication nodejs",
-    saveUninitialized:false,
+    saveUninitialized:true,
     resave:false,
     store:store,
+    cookie: {
+      sameSite: false,
+      secure: false,
+     //maxAge: 1000*60*60*24,
+      httpOnly: true,
+    },
 }))
 
-app.use(cors({
-    origin: '*'
-  }));
-  
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 app.use("/auth", authRoute);
 app.use("/blog", isAuth, blogRoute);
 app.use("/follow", isAuth, followRoute);

@@ -73,7 +73,7 @@ authRoute.post("/login", async(req, res)=>{
             username: userdb.username,
             email:userdb.email
         }
-
+console.log(req.session)
           return res.send({
             message: "login successfull"
           })
