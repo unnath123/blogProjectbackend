@@ -58,9 +58,10 @@ authRoute.post("/login", async(req, res)=>{
         const userdb = await User.findUserwithLoginID({loginID})
 
         //console.log(userdb)
+        console.log(1)
         const passwordMatched = await bcrypt.compare(password, userdb.password)
         // console.log(passwordMatched)
-
+        console.log(2)
         if(!passwordMatched){
             return res.send({
                 message:"password do not match",
@@ -73,6 +74,7 @@ authRoute.post("/login", async(req, res)=>{
             username: userdb.username,
             email:userdb.email
         }
+        console.log(3)
 console.log(req.session)
           return res.send({
             message: "login successfull"
@@ -81,6 +83,7 @@ console.log(req.session)
     catch(err){
         return res.send({
             message:err,
+            error:"cannot login",
             status:400
         })
     }

@@ -29,14 +29,14 @@ app.use(session({
     cookie: {
       sameSite: false,
       secure: false,
-     //maxAge: 1000*60*60*24,
+      maxAge: 1000*60*60*24*2,
       httpOnly: true,
     },
 }))
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5500",
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true,
   })
