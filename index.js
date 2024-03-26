@@ -27,7 +27,7 @@ app.use(session({
     resave: false,
     store:store,
     cookie: {
-      domain: 'https://blogprojectbackend.onrender.com',
+      domain: 'http://localhost:3000',
       path: '/',
       sameSite: false,
       secure: false,
