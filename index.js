@@ -27,12 +27,13 @@ app.use(session({
     resave: false,
     store:store,
     cookie: {
-      // domain: 'localhost',
+      domain: 'https://blogprojectbackend.onrender.com',
       path: '/',
       sameSite: false,
       secure: false,
       maxAge: 1000*60*60*24,
       httpOnly: true,
+      secure: true,
     },
 }))
 
