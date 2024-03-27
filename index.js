@@ -30,8 +30,8 @@ app.use(session({
       domain: 'blogui-chi.vercel.app',
       path:"/",
       maxAge: 1000*60*60*24*2,
-      secure: true,
-      sameSite: 'none',
+      // secure: true,
+      sameSite: 'None',
     },
 }))
 
