@@ -27,28 +27,28 @@ app.use(session({
     resave: false,
     store:store,
     cookie: {
-      domain: 'localhost', // Set domain to localhost
-      path:"/",
+      //domain: 'localhost', // Set domain to localhost
+      //path:"/",
       maxAge: 1000*60*60*24*2,
       secure: false,
-      sameSite: 'none',
+      //sameSite: 'none',
     },
 }))
 
-// app.use(
-//   cors({
-//     origin: "*",
-//     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
-//     credentials: true,
-//   })
-// );
-const corsOptions = {
-  origin: '*',
-  methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
-  credentials: true
-};
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
+// const corsOptions = {
+//   origin: 'http://localhost:3000',
+//   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+//   credentials: true
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.use("/auth", authRoute);
 app.use("/blog", isAuth, blogRoute);
