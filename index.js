@@ -27,11 +27,11 @@ app.use(session({
     resave: false,
     store:store,
     cookie: {
-      domain: 'blogui-chi.vercel.app',
-      path:"/",
+      // domain: 'blogui-chi.vercel.app',
+      // path:"/",
       maxAge: 1000*60*60*24*2,
-      // secure: true,
-      sameSite: 'None',
+      secure: true,
+      // sameSite: 'None',
     },
 }))
 
