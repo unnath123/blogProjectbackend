@@ -27,11 +27,11 @@ app.use(session({
     resave: false,
     store:store,
     cookie: {
-      // domain: 'blogui-chi.vercel.app',
-      // path:"/",
+      domain: 'localhost', // Set domain to localhost
+      path:"/",
       maxAge: 1000*60*60*24*2,
-      secure: true,
-      // sameSite: 'None',
+      secure: false,
+      sameSite: 'none',
     },
 }))
 
@@ -43,7 +43,7 @@ app.use(session({
 //   })
 // );
 const corsOptions = {
-  origin: 'https://blogui-chi.vercel.app',
+  origin: '*',
   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
   credentials: true
 };
