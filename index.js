@@ -30,7 +30,7 @@ app.use(session({
       //domain: 'blogprojectbackend.onrender.com', // Set domain to localhost
       //path:"/",
       maxAge: 1000*60*60*24*2,
-      secure: false,
+      secure: true,
       sameSite: 'none',
     },
 }))
