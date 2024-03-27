@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(session({
     secret:"Todo appplication nodejs",
     saveUninitialized: false,
-    resave: true,
+    resave: false,
     store:store,
     cookie: {
       maxAge: 1000*60*60*24*2,
