@@ -40,8 +40,10 @@ authRoute.post("/register", async (req, res)=>{
 
 })
 
-authRoute.post("/login", async(req, res)=>{
-    const {loginID, password} = req.body;
+authRoute.get("/login", async(req, res)=>{
+    // const {loginID, password} = req.body;
+    const loginID = "test2"
+    const password = "456";
 
     console.log("hi there")
     if(!loginID || !password){
