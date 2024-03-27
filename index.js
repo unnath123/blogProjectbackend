@@ -35,13 +35,21 @@ app.use(session({
     },
 }))
 
-app.use(
-  cors({
-    origin: "*",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "*",
+//     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+//     credentials: true,
+//   })
+// );
+const corsOptions = {
+  origin: 'https://blogui-chi.vercel.app',
+  methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+
 app.use("/auth", authRoute);
 app.use("/blog", isAuth, blogRoute);
 app.use("/follow", isAuth, followRoute);
