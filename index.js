@@ -24,21 +24,17 @@ app.use(express.json());
 app.use(session({
     secret:"Todo appplication nodejs",
     saveUninitialized: false,
-    resave: false,
+    resave: true,
     store:store,
     cookie: {
-      //domain: 'http://localhost:3000',
-      // path: '/',
-      sameSite: false,
       maxAge: 1000*60*60*24*2,
-      httpOnly: true,
-      // secure: false,
+      secure: false,
     },
 }))
 
 app.use(
   cors({
-    origin: "http://localhost:5500",
+    origin: "*",
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true,
   })
