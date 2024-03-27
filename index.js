@@ -27,6 +27,7 @@ app.use(session({
     resave: false,
     store:store,
     cookie: {
+      domain: 'blogui-chi.vercel.app',
       maxAge: 1000*60*60*24*2,
       secure: true,
       sameSite: 'none',
