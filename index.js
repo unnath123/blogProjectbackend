@@ -27,8 +27,8 @@ app.use(session({
     resave: false,
     store:store,
     cookie: {
-      domain: 'localhost', // Set domain to localhost
-      path:"/",
+      domain: 'https://blogprojectbackend.onrender.com', // Set domain to localhost
+      // path:"/",
       maxAge: 1000*60*60*24*2,
       secure: false,
       sameSite: 'none',
@@ -37,7 +37,8 @@ app.use(session({
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    // origin: "http://localhost:3000",
+    origin: "https://blogui-chi.vercel.app/",
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true,
   })
