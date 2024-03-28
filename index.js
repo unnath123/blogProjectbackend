@@ -35,14 +35,14 @@ app.use(session({
     },
 }))
 
-// app.use(
-//   cors({
-//     // origin: "http://localhost:3000",
-//     origin: "https://blogui-chi.vercel.app/",
-//     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    // origin: "http://localhost:3000",
+    origin: "https://blogui-chi.vercel.app/",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 
 app.use("/auth", authRoute);
 app.use("/blog", isAuth, blogRoute);
