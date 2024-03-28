@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .Loginpage-container{
+    height:100vh;
+    width:100vw;
+    display: flex;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    /* background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(25,85,156,1) 100%); */
+    background-image: linear-gradient(to bottom, #ff5c00, #ff8400, #fca900, #f3cb00, #e5eb12);
+}
+.d-flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loginPage-left{
+    flex:2;
+}
+.loginPage-right{
+    flex:2;
+}
+.login-form{
+    border:1px solid black;
+    width:400px;
+    padding:2rem;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 18px 0px rgba(0,0,0,0.75);
+}
+.loginPage-left img{
+    width:80%;
+    height:75%;
+    border-radius: 2rem;
+}
+.input-container{
+   /* border:1px solid black; */
+   justify-content: space-between;
+   padding:0rem 1rem;
+   background-color:rgb(231, 226, 208);
+   border-radius: 2rem;
+   margin-top: 1rem;
+}
+.input-container input{
+    height: 2.5rem;
+    width: 85%;
+    border:none;
+    outline:none;
+    background-color: rgb(231, 226, 208);
+}
+form button{
+    width:100%;
+    border-radius: 2rem;
+    height: 2.5rem;
+    margin-top: 1rem;
+    border:none;
+    outline:none;
+    background-color: green;
+    color:white;
+    font-weight: bold;
+}
+form button:hover{
+    cursor: pointer;
+    background-color: rgb(57, 155, 57);
+}
+</style>
+</head>
+<body>
+    <div class='Loginpage-container'>
+        <div class="loginPage-left d-flex">
+            <img src={loginPic} alt="computer" />
+        </div>
+        <div class="loginPage-right d-flex">
+            <div class='login-form'>
+                <form action="http://localhost:8000/auth/login" method="post">
+                    <div class='input-container d-flex'>
+                        <EmailIcon/>
+                        <input type="text" placeholder='Username' name="loginID"/>
+                    </div>
+                    <div class='input-container d-flex'>
+                        <LockIcon/>
+                        <input type="password" placeholder='Password' name="password"/>
+                    </div>
+                    <button type="submit">LOGIN</button>
+                </form>
+                <p style="margin-top:0.5rem; text-align:center">Forgot <a href="#">Email/Password</a> ?</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

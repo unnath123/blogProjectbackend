@@ -19,30 +19,33 @@ const store = new mongoDBsession({
     collection: "sessions"
 })
 
-
+app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: true })); // Place this before your route definitions
 app.use(express.json());
 app.use(session({
     secret:"Todo appplication nodejs",
-    saveUninitialized: false,
-    resave: false,
+    saveUninitialized:false,
+    resave:false,
     store:store,
     cookie: {
-      //domain: 'https://blogprojectbackend.onrender.com', // Set domain to localhost
-      // path:"/",
-      maxAge: 1000*60*60*24*2,
-      // secure: true,
-      sameSite: 'none',
-    },
+            //domain: 'https://blogprojectbackend.onrender.com', // Set domain to localhost
+            // path:"/",
+            maxAge: 1000*60*60*24*2,
+            // secure: false,
+            // sameSite: 'none'
+          },
 }))
+app.use(express.static("public"))
 
 app.use(
   cors({
-    // origin: "http://localhost:3000",
-    origin: "https://blogui-chi.vercel.app/",
+    //origin: "http://localhost:3000",
+    origin: "https://blogui-chi.vercel.app",
     methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true,
   })
 );
+app.set("view engine", "ejs");
 
 app.use("/auth", authRoute);
 app.use("/blog", isAuth, blogRoute);
@@ -51,6 +54,7 @@ app.use("/follow", isAuth, followRoute);
 app.get("/", (req, res)=>{
     return res.send("home page")
 })
+
 
 app.listen("8000", ()=>{
     console.log("server started")
